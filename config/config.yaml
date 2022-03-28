@@ -1,0 +1,40 @@
+# 分布式的相关参数，但是单机训练不需要修改
+nodes: 1 
+gpus: 1 # 单机训练不需要修改，分布式在调试中
+nr: 0 # 单机训练不需要修改
+dataparallel: 0 # Use DataParallel instead of DistributedDataParallel
+workers: 1
+
+# 训练集和测试集地址
+dataset_dir: "./datasets"
+valdata_dir: "./dddd"
+
+# 训练相关参数
+seed: 2 # sacred handles automatic seeding when passed in the config
+batch_size: 8
+image_size: 224
+start_epoch: 0
+# 无监督学习训练的训练epoch数目
+unsupervised_epochs: 100
+# 有监督学习的训练数目
+supervised_epochs: 100
+dataset: "GIF2" # STL10
+pretrain: True
+
+# 模型的相关选项
+resnet: "resnet18" # 支持resnet、alexnet、squeezenet、vgg、densenet、inception、googlenet、shufflenet、mobilenet_v2、mobilenet_v3_large、mobilenet_v3_small、resnext50_32x4d、wide_resnet50_2，对比学习这个选项是backbone函数
+projection_dim: 64 
+
+# 损失函数相关选项
+optimizer: "Adam" # or LARS (experimental)
+weight_decay: 1.0e-6 # "optimized using LARS [...] and weight decay of 10−6"
+temperature: 0.5 # see appendix B.7.: Optimal temperature under different batch sizes
+
+# 保存模型相关选项
+unsupervised_model_path: "save" # set to the directory containing `checkpoint_##.tar`
+supervised_model_path: "class_model"
+reload: False
+
+# logistic regression options
+logistic_batch_size: 8
+logistic_epochs: 50
